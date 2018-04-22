@@ -1,11 +1,9 @@
-local TILE_SIZE = 8
-local MAP_WIDTH = 10
-local MAP_HEIGHT = 10
-local SCALE = 5
+local game = {}
 
-local Game = {}
+game.hero = require("hero")
+local settings = require("settings")
 
-Game.map = {
+game.map = {
     { 1,14,14, 2, 1, 1, 1, 1, 5, 1},
     {14,14,14, 5, 1, 1, 1, 1, 5, 1},
     {14,14, 1, 5, 1, 1, 1, 1, 2, 1},
@@ -18,56 +16,64 @@ Game.map = {
     { 1, 1, 7, 8, 7, 7,13,13, 8,13}
 }
 
-Game.tileSheet = nil
-Game.tileTexture = {}
+game.tileSheet = nil
+game.tileTexture = {}
 
-function Game.load()
-    Game.tileSheet = love.graphics.newImage("assets/tileset.png")
+function game.load()
+    game.tileSheet = love.graphics.newImage("assets/tileset.png")
     -- get tiles
-    local cols = Game.tileSheet:getWidth() / TILE_SIZE
-    local rows = Game.tileSheet:getHeight() / TILE_SIZE
+    local cols = game.tileSheet:getWidth() / settings.TILE_SIZE
+    local rows = game.tileSheet:getHeight() / settings.TILE_SIZE
     local r, c
     local tileId = 0
-    Game.tileTexture[tileId] = nil
+    game.tileTexture[tileId] = nil
     for r = 1, rows do
         for c = 1, cols do
             if not (tileId == 0) then
-                Game.tileTexture[tileId] = love.graphics.newQuad(
-                    (c-1) * TILE_SIZE, 
-                    (r-1) * TILE_SIZE, 
-                    TILE_SIZE, TILE_SIZE, 
-                    Game.tileSheet:getWidth(), Game.tileSheet:getHeight()
+                game.tileTexture[tileId] = love.graphics.newQuad(
+                    (c-1) * settings.TILE_SIZE, 
+                    (r-1) * settings.TILE_SIZE, 
+                    settings.TILE_SIZE, settings.TILE_SIZE, 
+                    game.tileSheet:getWidth(), game.tileSheet:getHeight()
                 )
             end
             tileId = tileId + 1
         end
     end
+    -- get hero
+    game.hero.load()
 end
 
-function Game.draw()
+function game.update(dt)
+    game.hero.update(dt)
+end
+
+function game.draw()
     -- draw map
     local r, c
     local tileId = 0
     local tile = nil
-    for r = 1, MAP_WIDTH do
-        for c = 1, MAP_HEIGHT do
-            tileId = Game.map[r][c]
-            tile = Game.tileTexture[tileId]
+    for r = 1, settings.MAP_WIDTH do
+        for c = 1, settings.MAP_HEIGHT do
+            tileId = game.map[r][c]
+            tile = game.tileTexture[tileId]
             if tile ~= nil then
-                love.graphics.draw(Game.tileSheet, tile, (c-1) * TILE_SIZE, (r-1) * TILE_SIZE)
+                love.graphics.draw(game.tileSheet, tile, (c-1) * settings.TILE_SIZE, (r-1) * settings.TILE_SIZE)
             end
         end
     end
+    -- draw hero
+    game.hero.draw()
 end
 
-function Game.drawDebug()
+function game.drawDebug()
     -- draw tile id
     local x = love.mouse.getX()
     local y = love.mouse.getY()
-    local row = math.floor(y / TILE_SIZE / SCALE) + 1
-    local col = math.floor(x / TILE_SIZE / SCALE) + 1
-    local id = Game.map[row][col]
+    local row = math.floor(y / settings.TILE_SIZE / settings.SCALE) + 1
+    local col = math.floor(x / settings.TILE_SIZE / settings.SCALE) + 1
+    local id = game.map[row][col]
     love.graphics.print({ { 0, 0, 1, 1} , "Id:"..tostring(id) }, 0, 0)
 end
 
-return Game
+return game
