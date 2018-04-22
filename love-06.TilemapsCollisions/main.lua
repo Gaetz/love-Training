@@ -1,5 +1,6 @@
 local windowWidth, windowHeight
 local game = require("game")
+local settings = require("settings")
 
 function love.load()
     windowWidth, windowHeight = love.graphics.getWidth(), love.graphics.getHeight()
@@ -14,7 +15,7 @@ end
 
 function love.draw()
     love.graphics.push()
-    love.graphics.scale(5, 5)
+    love.graphics.scale(settings.SCALE, settings.SCALE)
 
     -- Draw with scaling
     game.draw()
