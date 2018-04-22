@@ -16,7 +16,11 @@ function love.draw()
     love.graphics.push()
     love.graphics.scale(5, 5)
 
+    -- Draw with scaling
     game.draw()
     
     love.graphics.pop()
+
+    -- Draw without scaling
+    game.drawDebug()
 end
