@@ -69,7 +69,20 @@ function map.clearFog(x, y)
     end
 end
 
-
+function map.clearFogAura(x, y)
+    local c, r
+    for c = 1, settings.MAP_WIDTH do
+        for r = 1, settings.MAP_HEIGHT do
+            local dist = math.dist(c, r, x+1, y+1)
+            if dist < 4 then
+                local alpha = dist / 4
+                if map.fogGrid[r][c] > alpha then
+                    map.fogGrid[r][c] = alpha
+                end
+            end
+        end
+    end
+end
 
 function map.draw()
     local r, c
@@ -86,7 +99,7 @@ function map.draw()
                 love.graphics.draw(map.tileSheet, tile, x, y)
                 -- draw fog
                 if map.fogGrid[r][c] > 0 then
-                    love.graphics.setColor(0, 0, 0, 1)
+                    love.graphics.setColor(0, 0, 0, map.fogGrid[r][c])
                     love.graphics.rectangle("fill", x, y, settings.TILE_SIZE, settings.TILE_SIZE)
                     love.graphics.setColor(1, 1, 1, 1)
                 end

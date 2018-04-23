@@ -27,7 +27,7 @@ function hero.load(map)
     hero.isMoving = false
     hero.speed = 3
 
-    map.clearFog(hero.x, hero.y)
+    map.clearFogAura(hero.x, hero.y)
 end
 
 function hero.update(dt, map)
@@ -102,7 +102,7 @@ function hero.endMove(map)
     hero.x = hero.targetX
     hero.y = hero.targetY
     hero.isMoving = false
-    map.clearFog(hero.x, hero.y)
+    map.clearFogAura(hero.x, hero.y)
 end
 
 function hero.draw()
