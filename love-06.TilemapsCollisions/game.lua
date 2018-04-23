@@ -10,7 +10,7 @@ function game.load()
 end
 
 function game.update(dt)
-    game.hero.update(dt)
+    game.hero.update(dt, game.map)
 end
 
 function game.draw()

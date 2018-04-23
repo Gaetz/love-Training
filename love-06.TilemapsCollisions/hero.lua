@@ -28,10 +28,10 @@ function hero.load()
     hero.speed = 3
 end
 
-function hero.update(dt)
+function hero.update(dt, map)
     -- input
     if not hero.isMoving then
-        if (love.keyboard.isDown("left") and hero.x > 0) then
+        if (love.keyboard.isDown("left") and hero.x > 0 ) then
             hero.targetX = hero.x - 1
             hero.direction = 2
             hero.isMoving = true
@@ -50,6 +50,12 @@ function hero.update(dt)
             hero.targetY = hero.y - 1
             hero.direction = 4
             hero.isMoving = true
+        end
+        -- collision cancel move
+        if map.isSolid(hero.targetX, hero.targetY) then
+            hero.targetX = hero.x
+            hero.targetY = hero.y
+            hero.isMoving = false
         end
     -- move
     else

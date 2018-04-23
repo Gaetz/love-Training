@@ -15,6 +15,7 @@ map.grid = {
 }
 map.tileSheet = nil
 map.tileTexture = {}
+map.solidTiles = {13, 14}
 
 function map.load()
     map.tileSheet = love.graphics.newImage("assets/tileset.png")
@@ -37,6 +38,16 @@ function map.load()
             tileId = tileId + 1
         end
     end
+end
+
+function map.isSolid(x, y)
+    local i
+    for i = 1, #map.solidTiles do
+        if map.grid[y+1][x+1] == map.solidTiles[i] then
+            return true
+        end
+    end
+    return false
 end
 
 function map.draw()
