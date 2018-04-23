@@ -36,17 +36,17 @@ function hero.update(dt)
             hero.direction = 2
             hero.isMoving = true
         end
-        if (love.keyboard.isDown("right") and hero.x < settings.MAP_WIDTH) then
+        if (love.keyboard.isDown("right") and hero.x < settings.MAP_WIDTH - 1) then
             hero.targetX = hero.x + 1
             hero.direction = 3
             hero.isMoving = true
         end
-        if (love.keyboard.isDown("down") and hero.x < settings.MAP_HEIGHT) then
+        if (love.keyboard.isDown("down") and hero.y < settings.MAP_HEIGHT - 1) then
             hero.targetY = hero.y + 1
             hero.direction = 1
             hero.isMoving = true
         end
-        if (love.keyboard.isDown("up") and hero.x > 0) then
+        if (love.keyboard.isDown("up") and hero.y > 0) then
             hero.targetY = hero.y - 1
             hero.direction = 4
             hero.isMoving = true
