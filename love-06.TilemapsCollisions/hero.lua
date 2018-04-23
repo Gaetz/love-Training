@@ -2,7 +2,7 @@ local hero = {}
 
 local settings = require("settings")
 
-function hero.load()
+function hero.load(map)
     hero.tileSheet = love.graphics.newImage("assets/knight.png")
     hero.directionTexture = {
         {}, {}, {}, {}
@@ -26,6 +26,8 @@ function hero.load()
     hero.targetY = 3
     hero.isMoving = false
     hero.speed = 3
+
+    map.clearFog(hero.x, hero.y)
 end
 
 function hero.update(dt, map)
@@ -62,29 +64,25 @@ function hero.update(dt, map)
         if hero.x < hero.targetX then
             hero.x = hero.x + hero.speed * dt
             if math.floor(hero.x) == hero.targetX then
-                hero.x = hero.targetX
-                hero.isMoving = false
+                hero.endMove(map)
             end
         end
         if hero.x > hero.targetX then
             hero.x = hero.x - hero.speed * dt
             if math.ceil(hero.x) == hero.targetX then
-                hero.x = hero.targetX
-                hero.isMoving = false
+                hero.endMove(map)
             end
         end
         if hero.y < hero.targetY then
             hero.y = hero.y + hero.speed * dt
             if math.floor(hero.y) == hero.targetY then
-                hero.y = hero.targetY
-                hero.isMoving = false
+                hero.endMove(map)
             end
         end
         if hero.y > hero.targetY then
             hero.y = hero.y - hero.speed * dt
             if math.ceil(hero.y) == hero.targetY then
-                hero.y = hero.targetY
-                hero.isMoving = false
+                hero.endMove(map)
             end
         end
     end
@@ -98,6 +96,13 @@ function hero.update(dt, map)
     else
         hero.anim = 1
     end
+end
+
+function hero.endMove(map)
+    hero.x = hero.targetX
+    hero.y = hero.targetY
+    hero.isMoving = false
+    map.clearFog(hero.x, hero.y)
 end
 
 function hero.draw()

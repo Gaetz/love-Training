@@ -16,6 +16,7 @@ map.grid = {
 map.tileSheet = nil
 map.tileTexture = {}
 map.solidTiles = {13, 14}
+map.fogGrid = {}
 
 function map.load()
     map.tileSheet = love.graphics.newImage("assets/tileset.png")
@@ -38,6 +39,13 @@ function map.load()
             tileId = tileId + 1
         end
     end
+    -- fog initialization
+    for r = 1, settings.MAP_WIDTH do
+        map.fogGrid[r] = {}
+        for c = 1, settings.MAP_HEIGHT do
+            map.fogGrid[r][c] = 1
+        end
+    end
 end
 
 function map.isSolid(x, y)
@@ -50,6 +58,19 @@ function map.isSolid(x, y)
     return false
 end
 
+function map.clearFog(x, y)
+    local c, r
+    for c = x, x+2 do
+        for r = y, y+2 do
+            if (c > 0 and c <= settings.MAP_WIDTH and r > 0 and r <= settings.MAP_HEIGHT) then
+                map.fogGrid[r][c] = 0
+            end
+        end
+    end
+end
+
+
+
 function map.draw()
     local r, c
     local tileId = 0
@@ -59,7 +80,16 @@ function map.draw()
             tileId = map.grid[r][c]
             tile = map.tileTexture[tileId]
             if tile ~= nil then
-                love.graphics.draw(map.tileSheet, tile, (c-1) * settings.TILE_SIZE, (r-1) * settings.TILE_SIZE)
+                -- draw tile
+                local x = (c-1) * settings.TILE_SIZE
+                local y = (r-1) * settings.TILE_SIZE
+                love.graphics.draw(map.tileSheet, tile, x, y)
+                -- draw fog
+                if map.fogGrid[r][c] > 0 then
+                    love.graphics.setColor(0, 0, 0, 1)
+                    love.graphics.rectangle("fill", x, y, settings.TILE_SIZE, settings.TILE_SIZE)
+                    love.graphics.setColor(1, 1, 1, 1)
+                end
             end
         end
     end

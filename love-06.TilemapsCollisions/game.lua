@@ -6,7 +6,7 @@ game.map = require("map")
 
 function game.load()
     game.map.load()
-    game.hero.load()
+    game.hero.load(game.map)
 end
 
 function game.update(dt)
