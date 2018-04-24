@@ -80,6 +80,9 @@ function map.clearFogAura(x, y)
                     map.fogGrid[r][c] = alpha
                 end
             end
+            if dist < 2 then
+                map.fogGrid[r][c] = 0
+            end
         end
     end
 end
