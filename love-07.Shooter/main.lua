@@ -26,3 +26,7 @@ function love.draw()
     -- Draw without scaling
     game.drawDebug()
 end
+
+function clamp(min, val, max)
+    return math.max(min, math.min(val, max));
+end
