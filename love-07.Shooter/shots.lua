@@ -13,9 +13,13 @@ local settings = require("settings")
     end
 
     function shots.update(dt)
-        for i=1,#shots.list do
+        for i=#shots.list,1,-1 do
             local shot = shots.list[i]
             shot.y = shot.y + shot.speed * dt
+            if shot.y < 0 - shot.image:getHeight() then
+                shot.image = nil
+                table.remove(shots.list, i)
+            end
         end
     end
 

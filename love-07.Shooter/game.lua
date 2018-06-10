@@ -19,7 +19,7 @@ function game.draw()
 end
 
 function game.drawDebug()
-
+    love.graphics.print({ { 0, 0, 1, 1} , #game.shots.list }, 0, 0)
 end
 
 function love.keypressed(key)
