@@ -1,6 +1,7 @@
 local player = {}
 local settings = require("settings")
 
+
 function player.load()
     player.image = love.graphics.newImage("assets/ship.png")
     player.x = settings.GAME_WIDTH / 2

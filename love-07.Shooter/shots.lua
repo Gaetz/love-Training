@@ -2,6 +2,7 @@ local shots = {}
 local settings = require("settings")
 
     shots.list = {}
+    sound = love.audio.newSource("assets/shoot.wav", "static")
 
     function shots.create(player)
         local shot = {}
@@ -10,6 +11,7 @@ local settings = require("settings")
         shot.y = player.y
         shot.speed = settings.SHOT_SPEED
         table.insert(shots.list, shot)
+        love.audio.play(sound)
     end
 
     function shots.update(dt)
