@@ -8,7 +8,7 @@ local settings = require("settings")
         -- Data in function of type
         local image = "assets/caca.png"
         local sx = 0
-        local sy = 2
+        local sy = 0.5
         if type == "cacarose" then
             image = "assets/cacarose.png"
             sx = 1
