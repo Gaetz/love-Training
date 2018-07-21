@@ -7,22 +7,22 @@ local settings = require("settings")
         local alien = {}
         -- Data in function of type
         local image = "assets/caca.png"
-        local sx = 0
-        local sy = 0.5
+        local vx = 0
+        local vy = 0.6
         if type == "cacarose" then
             image = "assets/cacarose.png"
-            sx = 1
+            vx = 1
             local direction = love.math.random(1, 2)
             if direction == 2 then
-                sx = -1
+                vx = -1
             end 
         end
         -- Data
         alien.image = love.graphics.newImage(image)
         alien.x = x
         alien.y = y
-        alien.sx = sx
-        alien.sy = sy
+        alien.vx = vx
+        alien.vy = vy
         alien.delete = false
         alien.w = alien.image:getWidth()
         alien.h = alien.image:getHeight()
@@ -33,10 +33,14 @@ local settings = require("settings")
         -- Logic
         for i=1,#aliens.list do
             local alien = aliens.list[i]
-            alien.x = alien.x + alien.sx
-            alien.y = alien.y + alien.sy
+            alien.x = alien.x + alien.vx
+            alien.y = alien.y + alien.vy
             if alien.y > settings.GAME_HEIGHT then
                 alien.delete = true
+            end
+            -- cacarose bounce
+            if (alien.x <= 0 or alien.x >= settings.GAME_WIDTH) then
+                alien.vx = -alien.vx
             end
         end
         -- Deletion

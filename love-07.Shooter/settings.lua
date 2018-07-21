@@ -10,5 +10,6 @@ settings.PLAYER_SPEED = 200
 settings.TILE_SIZE = 20
 settings.MAP_WIDTH = 12
 settings.MAP_HEIGHT = 15
+settings.MAP_SPEED = 0.4
 
 return settings

@@ -17,6 +17,7 @@ function game.load()
 end
 
 function game.update(dt)
+    game.map.update(dt)
     game.player.update(dt)
     game.shots.update(dt)
     game.aliens.update(dt)
