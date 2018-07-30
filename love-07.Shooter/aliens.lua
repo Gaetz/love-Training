@@ -96,7 +96,7 @@ local shots = require("shots")
             if alien.y > settings.GAME_HEIGHT then
                 alien.delete = true
             end
-            if alien.life == 0 then
+            if alien.life <= 0 then
                 aliens.destroy(i)
             end
         end
