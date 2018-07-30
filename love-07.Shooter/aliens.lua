@@ -33,6 +33,7 @@ local shots = require("shots")
         local image = "assets/caca.png"
         local vx = 0
         local vy = settings.ENEMY_Y_SPEED
+        local life = 1
         if type == "cacarose" then
             image = "assets/cacarose.png"
             vx = settings.ENEMY_X_SPEED
@@ -40,11 +41,13 @@ local shots = require("shots")
             if direction == 2 then
                 vx = -settings.ENEMY_X_SPEED
             end
+            life = 2
         end
         if type == "cacarouge" then
             image = "assets/cacarouge.png"
             vy = settings.MAP_SPEED
             alien.counter = 0
+            life = 3
         end
         -- Data
         alien.image = love.graphics.newImage(image)
@@ -57,6 +60,7 @@ local shots = require("shots")
         alien.w = alien.image:getWidth()
         alien.h = alien.image:getHeight()
         alien.type = type
+        alien.life = life
         table.insert(aliens.list, alien)
     end
 
@@ -92,6 +96,9 @@ local shots = require("shots")
             if alien.y > settings.GAME_HEIGHT then
                 alien.delete = true
             end
+            if alien.life == 0 then
+                aliens.destroy(i)
+            end
         end
         -- Deletion
         for i=#aliens.list, 1, -1 do
@@ -103,6 +110,11 @@ local shots = require("shots")
     end
 
     function aliens.hit(i)
+        local alien = aliens.list[i]
+        alien.life = alien.life - 1
+    end
+
+    function aliens.destroy(i)
         local alien = aliens.list[i]
         alien.delete = true
     end
