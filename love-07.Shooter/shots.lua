@@ -42,7 +42,8 @@ local settings = require("settings")
             end
             -- Shoot management
             shot.y = shot.y + shot.speed * dt
-            if shot.y < 0 - shot.image:getHeight() then
+            if shot.y < 0 - shot.image:getHeight() 
+            or shot.y > settings.GAME_HEIGHT then
                 shot.delete = true
             end
         end
