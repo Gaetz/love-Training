@@ -42,6 +42,11 @@ local settings = require("settings")
         -- Logic
         for i=1,#aliens.list do
             local alien = aliens.list[i]
+            -- Sleeping management
+            if alien.y + alien.image:getHeight() > 0 then
+                alien.sleeping = false
+            end
+            -- Behaviour
             if alien.sleeping then
                 alien.y = alien.y + settings.MAP_SPEED
             else
