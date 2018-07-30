@@ -22,22 +22,20 @@ local settings = require("settings")
     end
 
     function shots.update(player, aliens, dt)
-        for i=1,#shots.list do
+        for i= 1, #shots.list do
             local shot = shots.list[i]
             -- Shoot interaction
-            if shot.fromPlayer == false then
-                if collide(shot, player) then
-                    shot.delete = true
-                    print("hit")
-                end
-            end
-            if shot.fromPlayer == true then
-                for i=#aliens.list,1,-1 do
-                    local alien = aliens.list[i]
+            if shot.fromPlayer then
+                for j= 1, #aliens.list do
+                    local alien = aliens.list[j]
                     if collide(shot, alien) then
                         shot.delete = true
-                        print("alien hit")
+                        aliens.hit(j)
                     end
+                end
+            else
+                if collide(shot, player) then
+                    shot.delete = true
                 end
             end
             -- Shoot management
@@ -48,7 +46,7 @@ local settings = require("settings")
             end
         end
         -- Shoot deletion
-        for i=#shots.list,1,-1 do
+        for i= #shots.list, 1, -1 do
             local shot = shots.list[i]
             if shot.delete then
                 shot.image = nil

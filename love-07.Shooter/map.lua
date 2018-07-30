@@ -77,8 +77,8 @@ function map.load()
     end
 end
 
-function map.update()
-    map.camera.y = map.camera.y + settings.MAP_SPEED
+function map.update(dt)
+    map.camera.y = map.camera.y + settings.MAP_SPEED * dt
 end
 
 function map.draw()

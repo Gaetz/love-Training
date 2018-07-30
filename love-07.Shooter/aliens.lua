@@ -32,13 +32,13 @@ local shots = require("shots")
         -- Data in function of type
         local image = "assets/caca.png"
         local vx = 0
-        local vy = 0.6
+        local vy = settings.ENEMY_Y_SPEED
         if type == "cacarose" then
             image = "assets/cacarose.png"
-            vx = 1
+            vx = settings.ENEMY_X_SPEED
             local direction = love.math.random(1, 2)
             if direction == 2 then
-                vx = -1
+                vx = -settings.ENEMY_X_SPEED
             end
         end
         if type == "cacarouge" then
@@ -100,6 +100,11 @@ local shots = require("shots")
                 table.remove(aliens.list, i)
             end
         end
+    end
+
+    function aliens.hit(i)
+        local alien = aliens.list[i]
+        alien.delete = true
     end
 
     function aliens.draw()

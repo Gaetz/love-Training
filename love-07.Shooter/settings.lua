@@ -10,6 +10,9 @@ settings.PLAYER_SPEED = 200
 settings.TILE_SIZE = 20
 settings.MAP_WIDTH = 12
 settings.MAP_HEIGHT = 15
-settings.MAP_SPEED = 0.4
+settings.MAP_SPEED = 40
+settings.ENEMY_X_SPEED = 50
+settings.ENEMY_Y_SPEED = 70
+
 
 return settings
