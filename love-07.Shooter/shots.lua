@@ -4,12 +4,17 @@ local settings = require("settings")
     shots.list = {}
     sound = love.audio.newSource("assets/shoot.wav", "static")
 
-    function shots.create(player)
+    function shots.create(source, fromPlayer)
         local shot = {}
         shot.image = love.graphics.newImage("assets/shoot.png")
-        shot.x = player.x + player.image:getWidth() / 2 - shot.image:getWidth() / 2
-        shot.y = player.y
-        shot.speed = settings.SHOT_SPEED
+        shot.x = source.x + source.image:getWidth() / 2 - shot.image:getWidth() / 2
+        if fromPlayer then
+            shot.y = source.y
+            shot.speed = settings.SHOT_SPEED
+        else
+            shot.y = source.y + source.image:getHeight() / 2
+            shot.speed = -settings.SHOT_SPEED / 2
+        end
         table.insert(shots.list, shot)
         love.audio.play(sound)
     end

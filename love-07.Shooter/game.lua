@@ -32,7 +32,7 @@ end
 
 function love.keypressed(key)
     if key == "space" then
-        game.shots.create(game.player)
+        game.shots.create(game.player, true)
     end
 end
 

@@ -1,5 +1,6 @@
 local aliens = {}
 local settings = require("settings")
+local shots = require("shots")
 
     aliens.list = {}
 
@@ -43,6 +44,7 @@ local settings = require("settings")
         if type == "cacarouge" then
             image = "assets/cacarouge.png"
             vy = settings.MAP_SPEED
+            alien.counter = 0
         end
         -- Data
         alien.image = love.graphics.newImage(image)
@@ -54,6 +56,7 @@ local settings = require("settings")
         alien.sleeping = true
         alien.w = alien.image:getWidth()
         alien.h = alien.image:getHeight()
+        alien.type = type
         table.insert(aliens.list, alien)
     end
 
@@ -71,13 +74,23 @@ local settings = require("settings")
             else
                 alien.x = alien.x + alien.vx
                 alien.y = alien.y + alien.vy
+                -- cacarose bounce
+                if alien.type == "cacarose" then
+                    if (alien.x <= 0 or alien.x >= settings.GAME_WIDTH) then
+                        alien.vx = -alien.vx
+                    end
+                end
+                -- cacarouge shoot
+                if alien.type == "cacarouge" then
+                    alien.counter = alien.counter + 1
+                    if alien.counter >= 100 then
+                        shots.create(alien, false)
+                        alien.counter = 0
+                    end
+                end
             end
             if alien.y > settings.GAME_HEIGHT then
                 alien.delete = true
-            end
-            -- cacarose bounce
-            if (alien.x <= 0 or alien.x >= settings.GAME_WIDTH) then
-                alien.vx = -alien.vx
             end
         end
         -- Deletion
