@@ -3,6 +3,7 @@ local settings = require("settings")
 local shots = require("shots")
 
     aliens.list = {}
+    hitSound = love.audio.newSource("assets/explode.wav", "static")
 
     function aliens.generate()
         aliens.create("cacarouge", 11, 2)
@@ -112,6 +113,7 @@ local shots = require("shots")
     function aliens.hit(i)
         local alien = aliens.list[i]
         alien.life = alien.life - 1
+        hitSound:play()
     end
 
     function aliens.destroy(i)

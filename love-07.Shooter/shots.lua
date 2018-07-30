@@ -18,7 +18,7 @@ local settings = require("settings")
         shot.fromPlayer = fromPlayer
         shot.delete = false
         table.insert(shots.list, shot)
-        love.audio.play(sound)
+        sound:play()
     end
 
     function shots.update(player, aliens, dt)
