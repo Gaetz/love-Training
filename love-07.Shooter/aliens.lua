@@ -3,6 +3,14 @@ local settings = require("settings")
 
     aliens.list = {}
 
+    function aliens.generate()
+        aliens.create("caca", 7, 1)
+        aliens.create("caca", 6, 3)
+        aliens.create("cacarose", 5, 5)
+        aliens.create("caca", 6, 7)
+        aliens.create("caca", 7, 9)
+    end
+
     function aliens.create(type, row, col)
         local alien = {}
         -- Data in function of type
