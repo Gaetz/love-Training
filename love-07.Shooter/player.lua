@@ -17,7 +17,7 @@ function player.update(dt)
     if love.keyboard.isDown("left") then
         player.x = player.x - player.speed * dt
     end
-    player.x = clamp(0, player.x, settings.GAME_WIDTH - player.image:getWidth())
+    player.x = math.clamp(0, player.x, settings.GAME_WIDTH - player.image:getWidth())
 end
 
 function player.draw()

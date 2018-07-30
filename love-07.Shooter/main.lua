@@ -27,9 +27,11 @@ function love.draw()
     game.drawDebug()
 end
 
-function clamp(min, val, max)
+function math.clamp(min, val, max)
     return math.max(min, math.min(val, max));
 end
+
+function math.angle(x1,y1, x2,y2) return math.atan2(y2-y1, x2-x1) end
 
 function collide(a, b)
     if a == b then

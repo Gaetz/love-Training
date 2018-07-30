@@ -47,7 +47,6 @@ local shots = require("shots")
         if type == "cacarouge" then
             image = "assets/cacarouge.png"
             vy = settings.MAP_SPEED
-            alien.counter = 0
             life = 3
         end
         -- Data
@@ -62,10 +61,11 @@ local shots = require("shots")
         alien.h = alien.image:getHeight()
         alien.type = type
         alien.life = life
+        alien.counter = 0
         table.insert(aliens.list, alien)
     end
 
-    function aliens.update(dt)
+    function aliens.update(player, dt)
         -- Logic
         for i=1,#aliens.list do
             local alien = aliens.list[i]
@@ -85,12 +85,20 @@ local shots = require("shots")
                         alien.vx = -alien.vx
                     end
                 end
-                -- cacarouge shoot
+                -- Alien shoots
+                alien.counter = alien.counter + 1
                 if alien.type == "cacarouge" then
-                    alien.counter = alien.counter + 1
                     if alien.counter >= 100 then
-                        shots.create(alien, false)
                         alien.counter = 0
+                        local angle = math.angle(alien.x, alien.y, player.x, player.y)
+                        local vx = math.cos(angle) * 90
+                        local vy =  math.sin(angle) * 90
+                        shots.create(alien, false, true, vx, vy)
+                      end
+                else
+                    if alien.counter >= 200 then
+                        alien.counter = 0
+                        shots.create(alien, false, false)
                     end
                 end
             end
@@ -113,6 +121,7 @@ local shots = require("shots")
     function aliens.hit(i)
         local alien = aliens.list[i]
         alien.life = alien.life - 1
+        hitSound:setPitch(2.0)
         hitSound:play()
     end
 

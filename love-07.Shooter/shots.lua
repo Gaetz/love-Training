@@ -4,16 +4,30 @@ local settings = require("settings")
     shots.list = {}
     sound = love.audio.newSource("assets/shoot.wav", "static")
 
-    function shots.create(source, fromPlayer)
+    function shots.create(source, fromPlayer, isSmall, vx, vy)
         local shot = {}
-        shot.image = love.graphics.newImage("assets/shoot.png")
+        if isSmall then
+            shot.image = love.graphics.newImage("assets/shoot_small.png")
+        else
+            shot.image = love.graphics.newImage("assets/shoot.png")
+        end
         shot.x = source.x + source.image:getWidth() / 2 - shot.image:getWidth() / 2
         if fromPlayer then
             shot.y = source.y
-            shot.speed = settings.SHOT_SPEED
+            shot.vy = settings.SHOT_SPEED
+            shot.vx = 0
         else
             shot.y = source.y + source.image:getHeight() / 2
-            shot.speed = -settings.SHOT_SPEED / 2
+            if vy == nil then
+                shot.vy = -settings.SHOT_SPEED / 2
+            else
+                shot.vy = vy
+            end
+            if vx == nil then
+                shot.vx = 0
+            else 
+                shot.vx = vx
+            end
         end
         shot.fromPlayer = fromPlayer
         shot.delete = false
@@ -39,7 +53,8 @@ local settings = require("settings")
                 end
             end
             -- Shoot management
-            shot.y = shot.y + shot.speed * dt
+            shot.x = shot.x + shot.vx * dt
+            shot.y = shot.y + shot.vy * dt
             if shot.y < 0 - shot.image:getHeight() 
             or shot.y > settings.GAME_HEIGHT then
                 shot.delete = true

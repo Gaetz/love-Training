@@ -16,7 +16,7 @@ function game.update(dt)
     game.map.update(dt)
     game.shots.update(game.player, game.aliens, dt)
     game.player.update(dt)
-    game.aliens.update(dt)
+    game.aliens.update(game.player, dt)
 end
 
 function game.draw()
