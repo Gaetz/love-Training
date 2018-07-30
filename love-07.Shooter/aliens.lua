@@ -3,7 +3,7 @@ local settings = require("settings")
 
     aliens.list = {}
 
-    function aliens.create(type, x, y)
+    function aliens.create(type, row, col)
         local alien = {}
         -- Data in function of type
         local image = "assets/caca.png"
@@ -19,11 +19,12 @@ local settings = require("settings")
         end
         -- Data
         alien.image = love.graphics.newImage(image)
-        alien.x = x
-        alien.y = y
+        alien.x = col * settings.TILE_SIZE
+        alien.y = - row * settings.TILE_SIZE / 2 - (row - 1) * settings.TILE_SIZE
         alien.vx = vx
         alien.vy = vy
         alien.delete = false
+        alien.sleeping = true
         alien.w = alien.image:getWidth()
         alien.h = alien.image:getHeight()
         table.insert(aliens.list, alien)
@@ -33,8 +34,12 @@ local settings = require("settings")
         -- Logic
         for i=1,#aliens.list do
             local alien = aliens.list[i]
-            alien.x = alien.x + alien.vx
-            alien.y = alien.y + alien.vy
+            if alien.sleeping then
+                alien.y = alien.y + settings.MAP_SPEED
+            else
+                alien.x = alien.x + alien.vx
+                alien.y = alien.y + alien.vy
+            end
             if alien.y > settings.GAME_HEIGHT then
                 alien.delete = true
             end

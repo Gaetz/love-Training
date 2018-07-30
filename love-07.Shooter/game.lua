@@ -8,11 +8,11 @@ game.map = require("map")
 
 function game.load()
     game.player.load()
-    game.aliens.create("caca", 20, 20)
-    game.aliens.create("caca", 60, 60)
-    game.aliens.create("cacarose", 100, 100)
-    game.aliens.create("caca", 140, 60)
-    game.aliens.create("caca", 180, 20)
+    game.aliens.create("caca", 7, 1)
+    game.aliens.create("caca", 6, 3)
+    game.aliens.create("cacarose", 5, 5)
+    game.aliens.create("caca", 6, 7)
+    game.aliens.create("caca", 7, 9)
     game.map.load()
 end
 
