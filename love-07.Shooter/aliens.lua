@@ -4,11 +4,26 @@ local settings = require("settings")
     aliens.list = {}
 
     function aliens.generate()
-        aliens.create("caca", 7, 1)
-        aliens.create("caca", 6, 3)
-        aliens.create("cacarose", 5, 5)
-        aliens.create("caca", 6, 7)
-        aliens.create("caca", 7, 9)
+        aliens.create("cacarouge", 11, 2)
+        aliens.create("cacarouge", 13, 9)
+
+        aliens.create("caca", 20, 1)
+        aliens.create("caca", 19, 3)
+        aliens.create("cacarose", 18, 5)
+        aliens.create("caca", 19, 7)
+        aliens.create("caca", 20, 9)
+
+        aliens.create("cacarouge", 23, 2)
+        aliens.create("cacarouge", 25, 9)
+
+        aliens.create("caca", 32, 1)
+        aliens.create("caca", 31, 3)
+        aliens.create("cacarose", 30, 5)
+        aliens.create("caca", 31, 7)
+        aliens.create("caca", 32, 9)
+
+        aliens.create("cacarouge", 35, 2)
+        aliens.create("cacarouge", 37, 9)
     end
 
     function aliens.create(type, row, col)
@@ -23,12 +38,16 @@ local settings = require("settings")
             local direction = love.math.random(1, 2)
             if direction == 2 then
                 vx = -1
-            end 
+            end
+        end
+        if type == "cacarouge" then
+            image = "assets/cacarouge.png"
+            vy = settings.MAP_SPEED
         end
         -- Data
         alien.image = love.graphics.newImage(image)
-        alien.x = col * settings.TILE_SIZE
-        alien.y = - row * settings.TILE_SIZE / 2 - (row - 1) * settings.TILE_SIZE
+        alien.x = (col - 0.25) * settings.TILE_SIZE
+        alien.y = (- row + settings.MAP_HEIGHT - 0.5) * settings.TILE_SIZE
         alien.vx = vx
         alien.vy = vy
         alien.delete = false
