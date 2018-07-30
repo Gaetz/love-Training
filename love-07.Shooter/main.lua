@@ -31,16 +31,13 @@ function clamp(min, val, max)
     return math.max(min, math.min(val, max));
 end
 
-function collide(a1, a2)
-    if a1 == a2 then
+function collide(a, b)
+    if a == b then
         return false
     end
-    local dx = a1.x - a2.x
-    local dy = a1.y - a2.y
-    if math.abs(dx) < a1.image:getWidth() + a2.image.getWidth() then
-        if math.abs(dy) < a1.image:getHeight() + a2.image.getHeight() then
-            return true
-        end
-    end
-    return false
+    local test = (a.x + a.image:getWidth() < b.x) 
+        or (b.x + b.image:getWidth() < a.x) 
+        or (a.y + a.image:getHeight() < b.y) 
+        or (b.y + b.image:getHeight() < a.y)
+    return not test
 end

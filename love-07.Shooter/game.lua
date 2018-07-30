@@ -14,16 +14,16 @@ end
 
 function game.update(dt)
     game.map.update(dt)
+    game.shots.update(game.player, game.aliens, dt)
     game.player.update(dt)
-    game.shots.update(dt)
     game.aliens.update(dt)
 end
 
 function game.draw()
     game.map.draw()
     game.player.draw()
-    game.shots.draw()
     game.aliens.draw()
+    game.shots.draw()
 end
 
 function game.drawDebug()

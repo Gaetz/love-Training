@@ -15,15 +15,41 @@ local settings = require("settings")
             shot.y = source.y + source.image:getHeight() / 2
             shot.speed = -settings.SHOT_SPEED / 2
         end
+        shot.fromPlayer = fromPlayer
+        shot.delete = false
         table.insert(shots.list, shot)
         love.audio.play(sound)
     end
 
-    function shots.update(dt)
-        for i=#shots.list,1,-1 do
+    function shots.update(player, aliens, dt)
+        for i=1,#shots.list do
             local shot = shots.list[i]
+            -- Shoot interaction
+            if shot.fromPlayer == false then
+                if collide(shot, player) then
+                    shot.delete = true
+                    print("hit")
+                end
+            end
+            if shot.fromPlayer == true then
+                for i=#aliens.list,1,-1 do
+                    local alien = aliens.list[i]
+                    if collide(shot, alien) then
+                        shot.delete = true
+                        print("alien hit")
+                    end
+                end
+            end
+            -- Shoot management
             shot.y = shot.y + shot.speed * dt
             if shot.y < 0 - shot.image:getHeight() then
+                shot.delete = true
+            end
+        end
+        -- Shoot deletion
+        for i=#shots.list,1,-1 do
+            local shot = shots.list[i]
+            if shot.delete then
                 shot.image = nil
                 table.remove(shots.list, i)
             end

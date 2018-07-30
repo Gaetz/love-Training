@@ -70,10 +70,10 @@ local shots = require("shots")
             end
             -- Behaviour
             if alien.sleeping then
-                alien.y = alien.y + settings.MAP_SPEED
+                alien.y = alien.y + settings.MAP_SPEED * dt
             else
-                alien.x = alien.x + alien.vx
-                alien.y = alien.y + alien.vy
+                alien.x = alien.x + alien.vx * dt
+                alien.y = alien.y + alien.vy * dt
                 -- cacarose bounce
                 if alien.type == "cacarose" then
                     if (alien.x <= 0 or alien.x >= settings.GAME_WIDTH) then
