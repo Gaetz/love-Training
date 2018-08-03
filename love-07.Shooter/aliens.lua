@@ -65,7 +65,7 @@ local shots = require("shots")
         table.insert(aliens.list, alien)
     end
 
-    function aliens.update(player, dt)
+    function aliens.update(player, explosions, dt)
         -- Logic
         for i=1,#aliens.list do
             local alien = aliens.list[i]
@@ -106,7 +106,7 @@ local shots = require("shots")
                 alien.delete = true
             end
             if alien.life <= 0 then
-                aliens.destroy(i)
+                aliens.destroy(i, explosions)
             end
         end
         -- Deletion
@@ -125,8 +125,9 @@ local shots = require("shots")
         hitSound:play()
     end
 
-    function aliens.destroy(i)
+    function aliens.destroy(i, explosions)
         local alien = aliens.list[i]
+        explosions.createBig(alien.x, alien.y, alien.vx, alien.vy)
         alien.delete = true
     end
 

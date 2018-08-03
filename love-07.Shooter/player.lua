@@ -9,7 +9,7 @@ function player.load()
     player.speed = settings.PLAYER_SPEED
 end
 
-function player.update(dt)
+function player.update(explosions, dt)
     -- Move
     if love.keyboard.isDown("right") then
         player.x = player.x + player.speed * dt

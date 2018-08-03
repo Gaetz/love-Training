@@ -35,7 +35,7 @@ local settings = require("settings")
         sound:play()
     end
 
-    function shots.update(player, aliens, dt)
+    function shots.update(player, aliens, explosions, dt)
         for i= 1, #shots.list do
             local shot = shots.list[i]
             -- Shoot interaction
@@ -43,8 +43,13 @@ local settings = require("settings")
                 for j= 1, #aliens.list do
                     local alien = aliens.list[j]
                     if collide(shot, alien) then
-                        shot.delete = true
+                        explosions.create(
+                            shot.x + math.random(-2, 2) - alien.image:getWidth() / 2, 
+                            shot.y + math.random(-2, 2) - shot.image:getHeight() / 2, 
+                            alien.vx, alien.vy
+                        )
                         aliens.hit(j)
+                        shot.delete = true
                     end
                 end
             else
